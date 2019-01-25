@@ -3,17 +3,22 @@ package ua.rabota.pageObjects;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.TestException;
+import org.testng.log4testng.Logger;
+import ua.rabota.utilities.Helper;
 
-import java.util.concurrent.TimeUnit;
-
-public class StartPage {
+public class StartPage extends Helper {
     WebDriver driver;
 
-    public StartPage(WebDriver driver){
-        this.driver=driver;
-        PageFactory.initElements(driver, this);
+    public StartPage(WebDriver driver, Logger log, WebDriverWait wait) {
+        super(driver, log, wait);
     }
+
+//    public StartPage(WebDriver driver){
+//        this.driver=driver;
+//        PageFactory.initElements(driver, this);
+//    }
 
     @FindBy (xpath = "//div[@class='fd-f-left-middle fd-f1']//input[contains(@placeholder, 'Введите')]")
     WebElement inputKeyWordForSearch;
@@ -25,8 +30,14 @@ public class StartPage {
     WebElement buttonSearch;
 
     public void setKeyWordForSearch (String keyWord){
-        inputKeyWordForSearch.clear();
-        inputKeyWordForSearch.sendKeys(keyWord);
+        try {
+            inputKeyWordForSearch.clear();
+            inputKeyWordForSearch.sendKeys(keyWord);
+        } catch (Exception e) {
+            log.error("Unsuccedeed to set Key word");
+            throw new TestException(String.format("Current page title is: %s", driver.getTitle()));
+//            e.printStackTrace();
+        }
     }
 
     public void setCity(String city) throws InterruptedException {
@@ -38,6 +49,10 @@ public class StartPage {
     public void clickSearch(){
         buttonSearch.click();
     }
+
+
+
+
 
 
 
