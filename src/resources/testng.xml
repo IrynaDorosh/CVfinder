@@ -1,0 +1,30 @@
+
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Suite">
+
+    <test name="Testing Parameterization">
+
+
+        <parameter name="browser" value="chrome"/>
+        <parameter name="username" value="testuser324324324"/>
+        <parameter name="password" value="testpassword"/>
+
+        <classes>
+            <class name="ua.rabota.test_delLater.TCdel" />
+            <class name="ua.rabota.test_delLater.TC_MAIN" />
+        </classes>
+
+
+
+
+    <!--<parameter name="period" value="7 days"/>-->
+    <!--<parameter name="textForAssertingPeriod" value="7 дней"/>-->
+    <!--<classes>-->
+        <!--<class name="ua.rabota.testCases.SearchForVacancies" />-->
+    <!--</classes>-->
+
+    </test>
+
+
+</suite>

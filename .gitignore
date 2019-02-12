@@ -3,7 +3,6 @@ src/test/java/forLearning/
 target
 .idea
 logs/
-
-.idea/vcs.xml
-.idea/workspace.xml
+idea/vcs.xml
+idea/workspace.xml
 

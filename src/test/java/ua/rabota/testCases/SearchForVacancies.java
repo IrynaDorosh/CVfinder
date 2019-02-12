@@ -4,12 +4,16 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.openqa.selenium.*;
 import org.testng.Assert;
 import org.testng.TestException;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import ua.rabota.model.Vacancy;
 import ua.rabota.testData.Constants;
+
 import java.io.*;
+
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,15 +21,16 @@ public class SearchForVacancies extends BaseTest {
 
     private List<Vacancy> vacanciesList = new ArrayList<>();
 
+    @Parameters({"period", "textForAssertingPeriod"})
     @Test
-    public void navigateToResultPage() throws InterruptedException {
+    public void navigateToResultPage(String period, String textForAssertingPeriod) throws InterruptedException {
         driver.get(Constants.RABOTAUA_URL);
         startPage.sendKeysInField(Constants.KEYWORD_FOR_VACANCY_SEARCH, startPage.inputForSearch);
         startPage.sendKeysInField(Constants.CITY, startPage.inputForCity, 1000);
         startPage.click(startPage.buttonSearch);
         Assert.assertEquals(driver.getTitle(), "Работа qa automation в Киеве, поиск вакансий и работы в IT - Rabota.ua");
-        resultPageInterm.setSearchPeriod("7 days");
-        Assert.assertTrue(resultPageFinal.infoBarVacancy.getText().contains("7 дней"));
+        resultPageInterm.setSearchPeriod(period);//7 days
+        Assert.assertTrue(resultPageFinal.infoBarVacancy.getText().contains(textForAssertingPeriod));//7 дней
     }
 
     @Test(dependsOnMethods = {"navigateToResultPage"})
@@ -78,7 +83,7 @@ public class SearchForVacancies extends BaseTest {
 //    }
 
 
-    @Test (dependsOnMethods = {"collectVacanciesToList", "navigateToResultPage"})
+    @Test(dependsOnMethods = {"collectVacanciesToList", "navigateToResultPage"})
     public void writeSelectedVacToWorkbook() {
         List<Vacancy> filteredVacList = new ArrayList<>();
 
